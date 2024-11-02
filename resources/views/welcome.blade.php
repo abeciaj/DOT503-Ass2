@@ -137,7 +137,7 @@
                                 </div>
 
                                 <div class="pt-3 sm:pt-5">
-                                    <h2 class="text-xl font-semibold text-black dark:text-white">Master Branch (Include Feature-x)</h2>
+                                    <h2 class="text-xl font-semibold text-black dark:text-white">Master Branch (Include Feature-x, Feature-y & Feature-z)</h2>
 
                                     <p class="mt-4 text-sm/relaxed">
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin lacinia eros enim, in tincidunt mauris commodo eget. Sed non dui sed mi facilisis efficitur nec in est. Sed vitae purus erat.
