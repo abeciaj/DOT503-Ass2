@@ -38,9 +38,10 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh '''
-                docker-compose -f docker-compose.prod.yml up -d
-                '''
+                // Run migrations
+                sh 'docker-compose exec app php artisan migrate'
+                // Serve the application
+                sh 'docker-compose exec app php artisan serve --host=0.0.0.0 --port=8000'
             }
         }
     }
