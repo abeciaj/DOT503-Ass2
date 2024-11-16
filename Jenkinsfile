@@ -1,9 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'php:8.1-cli'
-        }
-    }
+    agent any
     environment {
         APP_ENV = 'testing'
     }
@@ -11,7 +7,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Clone the Laravel project
-                git branch: 'main', url: 'git@github.com:abeciaj/DOT503-Ass2.git'
+                git branch: 'jenkins-integration', url: 'git@github.com:abeciaj/DOT503-Ass2.git'
             }
         }
         stage('Install Dependencies') {
