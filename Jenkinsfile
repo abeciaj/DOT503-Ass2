@@ -13,20 +13,20 @@ pipeline {
 			stage('Build Docker Image') {
 				steps {
 					script {
-							sh "echo Hello World"
-							// sh "docker build -t ${DOCKER_IMAGE} ."
+							// sh "echo Hello World"
+							sh "docker build -t ${DOCKER_IMAGE} ."
 					}
 				}
 			}
-			// Test webhook
-			// stage('Run Docker Container') {
-			// 	steps {
-			// 		sh '''
-			// 		docker rm -f local-container || true
-			// 		docker run -d --name local-container -p 8080:80 ${DOCKER_IMAGE}
-			// 		'''
-			// 	}
-			// }
+			Test webhook
+			stage('Run Docker Container') {
+				steps {
+					sh '''
+					docker rm -f local-container || true
+					docker run -d --name local-container -p 8080:80 ${DOCKER_IMAGE}
+					'''
+				}
+			}
     }
 
     post {
