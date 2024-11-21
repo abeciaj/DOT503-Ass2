@@ -1,49 +1,40 @@
 pipeline {
-    agent any
-    environment {
-        APP_ENV = 'testing'
-    }
+	agent any
+	environment {
+		GIT_COMMIT_SHORT = "${sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()}"
+	}
     stages {
-        stage('Checkout') {
-            steps {
-                // Clone the Laravel project
-                git branch: 'jenkins-integration', url: 'git@github.com:abeciaj/DOT503-Ass2.git'
-            }
-        }
-        stage('Install Dependencies') {
-            steps {
-                sh '''
-                composer install
-                cp .env.example .env
-                php artisan key:generate
-                '''
-            }
-        }
-        stage('Run Tests') {
-            steps {
-                sh 'php artisan test'
-            }
-        }
-        stage('Build Docker Image') {
-            steps {
-                sh '''
-                docker-compose -f docker-compose.yml build
-                docker-compose -f docker-compose.yml up -d
-                '''
-            }
-        }
-        stage('Deploy') {
-            steps {
-                // Run migrations
-                sh 'docker-compose exec app php artisan migrate'
-                // Serve the application
-                sh 'docker-compose exec app php artisan serve --host=0.0.0.0 --port=8000'
-            }
-        }
+			stage('Checkout') {
+				steps {
+					git branch: 'main', url: 'your-repository-url'
+				}
+			}
+
+			stage('Build Docker Image') {
+				steps {
+					script {
+							sh "docker build -t ${DOCKER_IMAGE} ."
+					}
+				}
+			}
+
+			stage('Run Docker Container') {
+				steps {
+					sh '''
+					docker rm -f local-container || true
+					docker run -d --name local-container -p 8080:80 ${DOCKER_IMAGE}
+					'''
+				}
+			}
     }
+
     post {
-        always {
-            echo "Pipeline completed."
-        }
+			success {
+				echo "Build and local deployment completed successfully."
+			}
+			failure {
+				echo "Build or deployment failed. Please check the logs."
+				// Add notifications like Slack or email here if needed
+			}
     }
 }
