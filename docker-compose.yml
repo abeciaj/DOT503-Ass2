@@ -2,7 +2,13 @@ version: '3.8'
 
 services:
   app:
-    image: laravel_app:build-${BUILD_NUMBER}
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        GIT_COMMIT_SHORT: ${GIT_COMMIT_SHORT}
+        DOCKER_TAG: ${DOCKER_TAG}
+    image: laravel_app:${DOCKER_TAG}
     container_name: laravel_app
     working_dir: /var/www
     volumes:
