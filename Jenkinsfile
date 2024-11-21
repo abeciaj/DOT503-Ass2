@@ -17,10 +17,7 @@ pipeline {
 				steps {
 					script {
 						// Build the Docker image with a custom tag
-						sh '''
-						pwd
-						docker-compose build --build-arg GIT_COMMIT_SHORT=$GIT_COMMIT_SHORT --build-arg DOCKER_TAG=$DOCKER_TAG
-						'''
+						sh'docker-compose build'
 					}
 				}
 			}
