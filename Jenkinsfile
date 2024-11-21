@@ -4,6 +4,7 @@ pipeline {
 	environment {
 		GIT_COMMIT_SHORT = "${sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()}"
 		DOCKER_IMAGE = "local-image:${env.GIT_COMMIT_SHORT}"
+		DOCKER_TAG = "build-${env.BUILD_NUMBER}" // Jenkins BUILD_NUMBER for incremental tags
 	}
     stages {
 			stage('Checkout') {
@@ -15,28 +16,31 @@ pipeline {
 			stage('Build Docker Image') {
 				steps {
 					script {
-							// sh "echo Hello World "
-							sh "docker build -t ${DOCKER_IMAGE} ."
+						// Build the Docker image with a custom tag
+						sh "docker build -t laravel_app:${env.GIT_COMMIT_SHORT} -t laravel_app:${env.DOCKER_TAG} ."
 					}
 				}
 			}
-			stage('Run Docker Container') {
+
+			stage('Run Docker Compose') {
 				steps {
-					sh '''
-					docker rm -f local-container || true
-					docker run -d --name local-container -p 8080:80 ${DOCKER_IMAGE}
-					'''
+					script {
+						// Start the application using docker-compose
+						sh '''
+						docker-compose down || true
+						docker-compose up -d
+						'''
+					}
 				}
 			}
     }
 
-    post {
-			success {
-				echo "Build and local deployment completed successfully."
-			}
-			failure {
-				echo "Build or deployment failed. Please check the logs."
-				// Add notifications like Slack or email here if needed
-			}
-    }
+	post {
+		success {
+			echo "Build and deployment completed successfully. Image tagged as ${env.DOCKER_TAG} and ${env.GIT_COMMIT_SHORT}."
+		}
+		failure {
+			echo "Build or deployment failed. Please check the logs."
+		}
+	}
 }
