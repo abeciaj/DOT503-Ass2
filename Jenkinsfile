@@ -7,6 +7,7 @@ pipeline {
 			stage('Checkout') {
 				steps {
 					git branch: 'jenkins-integration', url: 'https://github.com/abeciaj/DOT503-Ass2.git'
+					DOCKER_IMAGE = "local-image:${env.GIT_COMMIT_SHORT}"
 				}
 			}
 
