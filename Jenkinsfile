@@ -6,7 +6,7 @@ pipeline {
     stages {
 			stage('Checkout') {
 				steps {
-					git branch: 'main', url: 'your-repository-url'
+					git branch: 'jenkins-integration', url: 'git@github.com:abeciaj/DOT503-Ass2.git'
 				}
 			}
 
