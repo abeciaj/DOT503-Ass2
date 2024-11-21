@@ -2,12 +2,12 @@ pipeline {
 	agent any
 	environment {
 		GIT_COMMIT_SHORT = "${sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()}"
+		DOCKER_IMAGE = "local-image:${env.GIT_COMMIT_SHORT}"
 	}
     stages {
 			stage('Checkout') {
 				steps {
 					git branch: 'jenkins-integration', url: 'https://github.com/abeciaj/DOT503-Ass2.git'
-					DOCKER_IMAGE = "local-image:${env.GIT_COMMIT_SHORT}"
 				}
 			}
 
