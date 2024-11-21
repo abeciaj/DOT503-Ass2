@@ -1,7 +1,9 @@
 pipeline {
-	
-	agent any
-	environment {
+
+	agent {
+			docker { image 'docker' }
+	}
+environment {
 		GIT_COMMIT_SHORT = "${sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()}"
 		DOCKER_IMAGE = "local-image:${env.GIT_COMMIT_SHORT}"
 	}
