@@ -26,7 +26,7 @@ pipeline {
 					script {
 						// Start the application using docker
 						sh 'docker run -d --name testing-app -p 8000:8000 -v $(pwd):/var/www -w /var/www laravel_app'
-						sh 'docker exec testing-app composer install --no-dev --optimize-autoloader'
+						sh 'docker exec testing-app composer install --optimize-autoloader'
 					}
 				}
 			}
