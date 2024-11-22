@@ -16,7 +16,7 @@ pipeline {
 			stage('Build Docker Image') {
 				steps {
 					script {
-						// Build the Docker image with a custom tag
+						// Build the Docker image
 						sh 'docker build -t laravel_app .'
 					}
 				}
