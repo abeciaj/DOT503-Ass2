@@ -9,7 +9,7 @@ pipeline {
     stages {
 			stage('Checkout') {
 				steps {
-					git branch: 'jenkins-integration', url: 'https://github.com/abeciaj/DOT503-Ass2.git'
+					git branch: 'master', url: 'https://github.com/abeciaj/DOT503-Ass2.git'
 				}
 			}
 
