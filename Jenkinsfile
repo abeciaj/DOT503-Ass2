@@ -17,7 +17,7 @@ pipeline {
 				steps {
 					script {
 						// Build the Docker image with a custom tag
-						sh 'docker build -t laravel_app -t laravel_app:${env.DOCKER_TAG} .'
+						sh 'docker build -t laravel_app .'
 					}
 				}
 			}
