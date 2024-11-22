@@ -3,7 +3,7 @@ pipeline {
 	environment {
 		GIT_COMMIT_SHORT = "${sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()}"
 		DOCKER_IMAGE = "local-image:${env.GIT_COMMIT_SHORT}"
-		DOCKER_TAG = "build-${env.BUILD_NUMBER}" // Jenkins BUILD_NUMBER for incremental tags
+		DOCKER_TAG = "build-${env.BUILD_NUMBER}"
 	}
     stages {
 			stage('Checkout') {
