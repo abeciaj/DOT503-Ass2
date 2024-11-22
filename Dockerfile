@@ -23,7 +23,7 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 COPY . /var/www
 
 # Install application dependencies
-RUN composer install --prefer-dist --no-scripts --no-dev --optimize-autoloader
+RUN composer install --prefer-dist --no-scripts --optimize-autoloader
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www \

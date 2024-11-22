@@ -16,7 +16,7 @@ pipeline {
 				steps {
 					script {
 						// Build the Docker image
-						sh 'docker build -t laravel_app .'
+						sh 'docker build --no-cache -t laravel_app .'
 					}
 				}
 			}
