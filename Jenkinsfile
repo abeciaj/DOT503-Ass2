@@ -22,7 +22,7 @@ pipeline {
 				}
 			}
 
-			stage('Run Docker Compose') {
+			stage('Run Docker Container') {
 				steps {
 					script {
 						// Start the application using docker
