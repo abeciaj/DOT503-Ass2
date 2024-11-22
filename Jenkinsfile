@@ -26,6 +26,7 @@ pipeline {
 					script {
 						// Start the application using docker
 						sh 'docker run -d --name testing-app -p 8000:8000 -v $(pwd):/var/www -w /var/www laravel_app'
+						sh 'docker exec testing-app composer install --no-dev --optimize-autoloader'
 					}
 				}
 			}
@@ -42,7 +43,7 @@ pipeline {
 
 	post {
 		success {
-			echo "Build and deployment completed successfully. Image tagged as ${env.DOCKER_TAG} and ${env.GIT_COMMIT_SHORT}."
+			echo "Build and deployment completed successfully."
 		}
 		failure {
 			echo "Build or deployment failed. Please check the logs."
