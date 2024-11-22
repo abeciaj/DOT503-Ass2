@@ -1,5 +1,4 @@
 pipeline {
-	
 	agent any
 	environment {
 		GIT_COMMIT_SHORT = "${sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()}"
@@ -27,6 +26,15 @@ pipeline {
 					script {
 						// Start the application using docker
 						sh 'docker run -d --name testing-app -p 8000:8000 -v $(pwd):/var/www -w /var/www laravel_app'
+					}
+				}
+			}
+
+			stage('Run Unit Tests') {
+				steps {
+					script {
+						// Run Laravel unit tests inside the Docker container
+						sh 'docker exec testing-app php artisan test'
 					}
 				}
 			}
