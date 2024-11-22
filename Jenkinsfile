@@ -17,7 +17,7 @@ pipeline {
 				steps {
 					script {
 						// Build the Docker image with a custom tag
-						sh'docker-compose build'
+						sh 'docker build -t laravel_app:${env.GIT_COMMIT_SHORT} -t laravel_app:${env.DOCKER_TAG} .'
 					}
 				}
 			}
@@ -25,11 +25,8 @@ pipeline {
 			stage('Run Docker Compose') {
 				steps {
 					script {
-						// Start the application using docker-compose
-						sh '''
-						docker-compose down || true
-						docker-compose up -d
-						'''
+						// Start the application using docker
+						sh 'docker run -d --name testing-app -p 8000:8000 -v $(pwd):/var/www -w /var/www laravel_app'
 					}
 				}
 			}
